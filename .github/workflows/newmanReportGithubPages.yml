@@ -42,7 +42,7 @@ jobs:
         if: ${{ always() }}
         uses: peaceiris/actions-gh-pages@v3.8.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.CI_TOKEN }}
           publish_branch: gh-pages
           publish_dir: results-history
           keep_files: true 
