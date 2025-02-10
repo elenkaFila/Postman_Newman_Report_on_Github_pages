@@ -28,8 +28,8 @@ jobs:
 
       - name: Run tests
         run: |
-          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r htmlextra
-
+          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html
+      
       - name: Output the results
         uses: actions/upload-artifact@v4
         with:
