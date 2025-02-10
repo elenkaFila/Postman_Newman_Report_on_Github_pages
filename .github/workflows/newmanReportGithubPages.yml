@@ -25,7 +25,7 @@ jobs:
           newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli, htmlextra --reporter-htmlextra-export testResults/htmlreport.html
 
       - name: Output the results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Reporter
           path: testResults
