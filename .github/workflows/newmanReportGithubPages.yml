@@ -19,12 +19,11 @@ jobs:
         run: |
           npm install -g newman
           
-      - name: Install newman reporter
-        run: |
-         npm install newman-reporter-html 
+      
 
       - name: Run tests
         run: |
+          npm install newman-reporter-html
           newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r 'html' --reporter-html-export testResults/htmlreport.html
       
       - name: Output the results
