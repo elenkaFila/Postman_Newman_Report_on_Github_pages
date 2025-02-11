@@ -32,21 +32,10 @@ jobs:
           name: Reporter
           path: testResults
 
-      - name: Test marketplace action
+      - name: Publish reports
         uses: PavanMudigonda/html-reporter-github-pages@v1.4
-        id: test-report
         with:
-          test_results: testResults
+          test_results: test-results
           keep_reports: 20
-          tool_name: Postman 
-          gh_pages: gh-pages
-          results_history: results-history
-
-      - name: Publish Github Pages
-        if: ${{ always() }}
-        uses: peaceiris/actions-gh-pages@v3.8.0
-        with:
-          github_token: ${{ secrets.CI_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: results-history
-          keep_files: true 
+          gh_pages: gh_pages
+          token: ${{ secrets.CI_TOKEN }}
