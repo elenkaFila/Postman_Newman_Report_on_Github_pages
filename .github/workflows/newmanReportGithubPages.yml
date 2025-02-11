@@ -33,7 +33,7 @@ jobs:
           path: testResults
 
       - name: Test marketplace action
-        uses: PavanMudigonda/html-reporter-github-pages@v1.2
+        uses: PavanMudigonda/html-reporter-github-pages@v1.4
         id: test-report
         with:
           test_results: testResults
