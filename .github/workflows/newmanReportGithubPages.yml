@@ -14,18 +14,30 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
+
+          
+          
       - run: npm i npm@latest
       - run: npm i
-
+      
       - name: Install Newman
         run: |
           npm install -g newman
           npm install -g newman-reporter-htmlextra
-
+      
       - name: Run tests
+      - name: Run POSTMAN collection
         run: |
-          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli, htmlextra --reporter-htmlextra-export testResults/index.html  || true
+          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export testResults/htmlreport.html || true
+      - run: npm i npm@latest
+      - run: npm i
 
+      - name: Output the results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Reporter
+          path: testResults
+          
       - name: Get test results history
         uses: actions/checkout@v4
         if: always()
