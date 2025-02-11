@@ -14,8 +14,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-
-          
+      
           
       - run: npm i npm@latest
       - run: npm i
@@ -29,9 +28,7 @@ jobs:
       - name: Run POSTMAN collection
         run: |
           newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export testResults/htmlreport.html || true
-      - run: npm i npm@latest
-      - run: npm i
-
+      
       - name: Output the results
         uses: actions/upload-artifact@v3
         with:
