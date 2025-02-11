@@ -37,6 +37,8 @@ jobs:
         id: test-report
         with:
           test_results: testResults
+          keep_reports: 20
+          tool_name: Postman 
           gh_pages: gh-pages
           results_history: results-history
 
