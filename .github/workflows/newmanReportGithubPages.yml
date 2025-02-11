@@ -32,19 +32,29 @@ jobs:
           name: Reporter
           path: testResults
 
-      - name: Test marketplace action
-        uses: PavanMudigonda/html-reporter-github-pages@v1.0
+      - name: Get test results history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+  
+      - name: HTML Report action
+        uses: PavanMudigonda/html-reporter-github-pages@v1.1
         id: test-report
+        if: always()
         with:
-          test_results: testResults
+          test_results: testResults/target/reports
           gh_pages: gh-pages
-          results_history: results-history
-
+          results_history: testResults/results-history
+  
       - name: Publish Github Pages
-        if: ${{ always() }}
-        uses: peaceiris/actions-gh-pages@v3.8.0
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4.0.0
         with:
-          github_token: ${{ secrets.CI_TOKEN }}
+          github_token: ${{ secrets.ci_token }}
           publish_branch: gh-pages
-          publish_dir: results-history
-          keep_files: true 
+          publish_dir: testResults/results-history
+          keep_files: true
+  
