@@ -24,7 +24,7 @@ jobs:
       - name: Run tests
         run: |
           npm install newman-reporter-html
-          npm audit
+          npm audit fix
           newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r 'html' --reporter-html-export testResults/htmlreport.html
       
       - name: Output the results
