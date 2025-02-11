@@ -24,7 +24,7 @@ jobs:
 
       - name: Run tests
         run: |
-          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli, htmlextra --reporter-htmlextra-export testResults/htmlreport.html  || true
+          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli, htmlextra --reporter-htmlextra-export testResults/index.html  || true
 
       - name: Get test results history
         uses: actions/checkout@v4
