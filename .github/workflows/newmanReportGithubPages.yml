@@ -36,6 +36,6 @@ jobs:
         uses: PavanMudigonda/html-reporter-github-pages@v1.4
         with:
           test_results: test-results
-          keep_reports: 20
           gh_pages: gh_pages
+          order: descending
           token: ${{ secrets.CI_TOKEN }}
