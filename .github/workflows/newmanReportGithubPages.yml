@@ -32,13 +32,7 @@ jobs:
           name: Reporter
           path: testResults
 
-      - name: Get test results history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+      
   
       - name: HTML Report action
         uses: PavanMudigonda/html-reporter-github-pages@v1.1
