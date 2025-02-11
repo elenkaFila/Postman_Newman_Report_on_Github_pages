@@ -14,28 +14,39 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.x'
-      
-      - run: npm i npm@latest
-      - run: npm i
+        
       - name: Install newman
         run: |
           npm install -g newman
           npm install -g newman-reporter-htmlextra
-      
-      - name: Run POSTMAN collection
-        run: |
-          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export testResults/index.html || true
-                
-      - name: Output the results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Reporter
-          path: testResults
 
-      - name: Publish reports
-        uses: PavanMudigonda/html-reporter-github-pages@v1.4
+      - name: Run tests
+        run: |
+          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli, htmlextra --reporter-htmlextra-export testResults/htmlreport.html
+
+
+      - name: Get test results history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
         with:
-          test_results: test-results
-          order: ascending
-          gh_pages: gh_pages          
-          token: ${{ secrets.CI_TOKEN }}
+          ref: gh-pages
+          path: gh-pages
+  
+      - name: HTML Report action
+        uses: PavanMudigonda/html-reporter-github-pages@v1.1
+        id: test-report
+        if: always()
+        with:
+          test_results: testResults/target/reports
+          gh_pages: gh-pages
+          results_history: testResults/results-history
+  
+      - name: Publish Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4.0.0
+        with:
+          github_token: ${{ secrets.ci_token }}
+          publish_branch: gh-pages
+          publish_dir: testResults/results-history
+          keep_files: true
