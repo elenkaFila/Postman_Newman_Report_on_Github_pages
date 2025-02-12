@@ -33,10 +33,10 @@ jobs:
           path: testResults
 
       - name: Test marketplace action
-        uses: PavanMudigonda/html-reporter-github-pages@v1.4
+        uses: PavanMudigonda/html-reporter-github-pages@v1.0
         id: test-report
         with:
-          test_results: testResults
+          test_results: testResults/target/Newman
           gh_pages: gh-pages
           results_history: results-history
 
