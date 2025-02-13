@@ -26,19 +26,12 @@ jobs:
         run: |
           newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export testResults/index.html || true
 
-      - name: Output the results
-        uses: actions/upload-artifact@v4
-        with:
-          name: Reporter
-          path: testResults
-
       - name: Get test results history
         uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages
           
       - name: Test marketplace action
         uses: PavanMudigonda/html-reporter-github-pages@v1.1
