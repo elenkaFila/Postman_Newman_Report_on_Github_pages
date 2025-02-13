@@ -39,7 +39,7 @@ jobs:
         id: test-report
         if: always()
         with:
-          test_results: testResults
+          test_results: testResults/target/reports
           gh_pages: gh-pages
           results_history: testResults/results-history
   
