@@ -38,7 +38,7 @@ jobs:
         with:
           test_results: testResults
           gh_pages: gh-pages
-          results_history: results-history
+          results_history: testResults/results-history
 
       - name: Publish Github Pages
         if: ${{ always() }}
@@ -46,5 +46,5 @@ jobs:
         with:
           github_token: ${{ secrets.ci_token }}
           publish_branch: gh-pages
-          publish_dir: results-history
+          publish_dir: testResults/results-history
           keep_files: true 
