@@ -46,7 +46,7 @@ jobs:
         with:
           test_results: testResults
           gh_pages: gh-pages
-          results_history: testResults/results-history
+          results_history: testResults
 
       - name: Publish Github Pages
         if: ${{ always() }}
