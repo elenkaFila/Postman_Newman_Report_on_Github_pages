@@ -41,7 +41,7 @@ jobs:
           path: gh-pages
           
       - name: Test marketplace action
-        uses: PavanMudigonda/html-reporter-github-pages@v1.4
+        uses: PavanMudigonda/html-reporter-github-pages@v1.1
         id: test-report
         with:
           test_results: testResults
