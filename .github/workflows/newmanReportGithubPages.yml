@@ -36,7 +36,7 @@ jobs:
         uses: PavanMudigonda/html-reporter-github-pages@v1.0
         id: test-report
         with:
-          test_results: testResults
+          test_results: testResults/target/reports
           gh_pages: gh-pages
           results_history: testResults/results-history
 
