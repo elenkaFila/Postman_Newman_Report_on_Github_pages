@@ -1,0 +1,1 @@
+Testing api https://petstore.swagger.io/. Tests run in Newman, reports in cli and html-reporter. Last html report deploys to github page https://elenkafila.github.io/Postman_Newman_Report_on_Github_pages/
