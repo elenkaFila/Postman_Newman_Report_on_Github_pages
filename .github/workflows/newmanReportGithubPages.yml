@@ -1,6 +1,11 @@
 name: Newman extra-html-report deploy to github page 
 
-on: [workflow_dispatch,push]
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '00 18 * * *'
+
 jobs:
   test-api:
     runs-on: ubuntu-latest
