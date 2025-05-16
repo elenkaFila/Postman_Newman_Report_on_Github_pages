@@ -45,7 +45,7 @@ jobs:
           keep_reports: 20
           subfolder: reports
           tool_name: newman
-          workflow_name: ${{ github.workflow }}
+          workflow_name: newman
           env: QA
 
       - name: Publish Github Pages
