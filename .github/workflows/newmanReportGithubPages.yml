@@ -1,4 +1,4 @@
-name: Newman extra-html-report deploy to github page 
+name: Newman Allure Report Deploy to GitHub Pages
 
 on:
   push:
@@ -9,47 +9,53 @@ on:
 jobs:
   test-api:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Create dir
-        run: |
-          mkdir -p testResults
 
-      - name: Install Node
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '16.x'
-      
-      - run: npm i npm@latest
-      - run: npm i
-      - name: Install newman
+
+      - name: Install dependencies
         run: |
-          npm install -g newman
-          npm install -g newman-reporter-htmlextra
-      
-      - name: Run POSTMAN collection
+          npm install -g newman newman-reporter-allure allure-commandline
+
+      - name: Run Newman with Allure reporter
         run: |
-          newman run "petStore.postman_collection.json" -e "petStore.postman_environment.json" -r cli,htmlextra --reporter-htmlextra-export testResults/index.html || true
+          mkdir -p testResults/allure-results
+          newman run "petStore.postman_collection.json" \
+            -e "petStore.postman_environment.json" \
+            -r cli,allure --reporter-allure-export testResults/allure-results || true
 
-      - name: Output the results
-        uses: actions/upload-artifact@v4
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v3
         with:
-          name: Reporter
-          path: testResults
+          ref: gh-pages
+          path: gh-pages
 
-      - name: Test marketplace action
-        uses: PavanMudigonda/html-reporter-github-pages@v1.0
-        id: test-report
-        with:
-          test_results: testResults
-          gh_pages: gh-pages
-          results_history: results-history
+      - name: Copy previous report history
+        run: |
+          mkdir -p testResults/allure-results/history
+          if [ -d gh-pages/history ]; then
+            cp -R gh-pages/history/* testResults/allure-results/history || true
+          fi
 
-      - name: Publish Github Pages
-        if: ${{ always() }}
-        uses: peaceiris/actions-gh-pages@v3.8.0
+      - name: Generate Allure HTML report
+        run: |
+          allure generate testResults/allure-results --clean -o testResults/allure-report
+
+      - name: Save new history for next run
+        run: |
+          mkdir -p gh-pages/history
+          cp -R testResults/allure-report/history gh-pages/history || true
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.ci_token }}
           publish_branch: gh-pages
-          publish_dir: results-history
-          keep_files: true 
+          publish_dir: testResults/allure-report
+          keep_files: true
