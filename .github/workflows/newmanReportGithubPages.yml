@@ -1,4 +1,4 @@
-name: Newman extra-html-report deploy to github page 
+name: newman-report
 
 on:
   push:
